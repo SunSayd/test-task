@@ -1,0 +1,12 @@
+$primary-font: 'Inter';
+$secondary-font: sans-serif;
+
+// стандартный размер шрифта в браузере - 16px, 62.5% = 10px, сделано для удобства расчетов в rem, 1rem будет равен 10px
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: $primary-font;
+}
