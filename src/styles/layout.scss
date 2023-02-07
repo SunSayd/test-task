@@ -1,24 +1,16 @@
+@use "sass:math";
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-
+body {
+  margin: 0;
+}
 // сетка а-ля bootstrap 4, построеная на флексах
 $columns: 12;
 $gutter: 3rem;
-$gutter-column: $gutter / 2;
-$breakpoints: (
-        'xxs': 320px,
-        'xs': 375px,
-        'sm': 430px,
-        'md': 744px,
-        'lg': 834px,
-        'xl': 1024px,
-        'xxl': 1280px,
-        'xxxl': 1440px,
-        'xxxxl': 1920px,
-);
+$gutter-column: 1.5rem;
 
 .row {
   display: flex;
@@ -28,7 +20,7 @@ $breakpoints: (
 }
 
 .column,
-[class^='column-'] {
+[class^="column-"] {
   position: relative;
   width: 100%;
   padding-right: $gutter-column;
@@ -45,8 +37,8 @@ $breakpoints: (
   @media (min-width: map_get($breakpoints, $size)) {
     @for $i from 1 through $columns {
       .column-#{$size}-#{$i} {
-        flex: 0 0 percentage($i / $columns);
-        max-width: percentage($i / $columns);
+        flex: 0 0 math.percentage(math.div($i , $columns));
+        max-width: math.percentage(math.div($i , $columns));
       }
     }
   }
@@ -54,61 +46,63 @@ $breakpoints: (
 
 .container {
   width: 100%;
+  height: 100%;
   margin: 0 auto;
 }
+
 /* размеры контентной области для каждого брейкпоинта,
    у размеров выше lg включительно учитываяем паддинг контейнера слева и справа
    размером в 0.9rem и прибавляем 1.8rem
 */
-@media (min-width: map-get($breakpoints, 'xxs')) {
+@media (min-width: map-get($breakpoints, "xxs")) {
   .container {
     padding: 0 2.2rem;
   }
 }
 
-@media (min-width: map-get($breakpoints,'xs')) {
+@media (min-width: map-get($breakpoints, "xs")) {
   .container {
     padding: 0 2.6rem;
   }
 }
 
-@media (min-width: map-get($breakpoints,'sm')) {
+@media (min-width: map-get($breakpoints, "sm")) {
   .container {
     padding: 0 0.9rem;
   }
 }
 
-@media (min-width: map-get($breakpoints,'md')) {
+@media (min-width: map-get($breakpoints, "md")) {
   .container {
     max-width: 64rem;
   }
 }
 
-@media (min-width: map-get($breakpoints,'lg')) {
+@media (min-width: map-get($breakpoints, "lg")) {
   .container {
     max-width: 81.6rem;
   }
 }
 
-@media (min-width: map-get($breakpoints,'xl')) {
+@media (min-width: map-get($breakpoints, "xl")) {
   .container {
     max-width: 92.4rem;
   }
 }
 
-@media (min-width: map-get($breakpoints,'xxl')) {
+@media (min-width: map-get($breakpoints, "xxl")) {
   .container {
     max-width: 121.2rem;
   }
 }
 
-@media (min-width: map-get($breakpoints,'xxxl')) {
+@media (min-width: map-get($breakpoints, "xxxl")) {
   .container {
     max-width: 130.8rem;
   }
 }
 
-@media (min-width: map-get($breakpoints,'xxxxl')) {
+@media (min-width: map-get($breakpoints, "xxxxl")) {
   .container {
     max-width: 140.4rem;
   }
