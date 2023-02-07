@@ -1,13 +1,15 @@
 <template>
-<div>
-  <div class="product"/>
-</div>
+  <figure class="product">
+    <figcaption>
+      <p></p>
+    </figcaption>
+  </figure>
 </template>
 
-<script>
+<script lang="ts">
 export default {
-  name: "Product"
-}
+  name: 'Product',
+};
 </script>
 
 <style lang="scss">

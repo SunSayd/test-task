@@ -183,6 +183,7 @@ module.exports = {
     ],
     'vue/next-tick-style': [ 'error', 'promise' ],
     'vue/no-multiple-objects-in-class': [ 'error' ],
+    'vue/multi-word-component-names': 'off',
     'vue/no-useless-mustaches': [ 'error' ],
     'vue/no-useless-v-bind': [ 'error', {
       'ignoreIncludesComment': false,

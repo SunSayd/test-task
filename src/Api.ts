@@ -3,7 +3,6 @@ import HttpClient from './HttpClient';
 import axios, { AxiosInstance } from 'axios';
 
 const AXIOS_INSTANCE_CONFIG = {
-  withCredentials: true,
   headers: {
     Accept: 'application/json',
     'Content-type': 'application/json',
@@ -12,12 +11,12 @@ const AXIOS_INSTANCE_CONFIG = {
 
 const DOGS_API_CONFIG = {
   ...AXIOS_INSTANCE_CONFIG,
-  'baseurl' :' https://random.dog',
+  baseURL :'https://random.dog',
 };
 
 const PRODUCT_API_CONFIG = {
   ...AXIOS_INSTANCE_CONFIG,
-  'baseurl' :'https://dummyjson.com',
+  baseURL :'https://dummyjson.com',
 };
 
 class BaseApi  {
@@ -40,6 +39,7 @@ class ProductsApi extends BaseApi {
   async getProducts (limit: number) {
     return this.httpClient.get<any>(
       '/products',
+        {limit: limit}
     );
   }
 }

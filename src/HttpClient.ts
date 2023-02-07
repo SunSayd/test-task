@@ -6,12 +6,6 @@ import type {
 
 /** Базовый сервис для запросов к api */
 class HttpClient {
-  static handlers: {
-    onLogoutRequired?: () => void;
-    onUpgradeSessionRequired?: () => Promise<boolean>;
-    onGetSessionToken?: () => string;
-  } = {};
-
   private axiosInstance: AxiosInstance;
 
   constructor(axiosInstance: AxiosInstance) {
@@ -42,7 +36,7 @@ class HttpClient {
     });
   }
 
-  protected async request<Response>(config: AxiosRequestConfig) {
+  private async request<Response>(config: AxiosRequestConfig) {
     try {
       const response = await this.axiosInstance.request<Response>(config);
 
@@ -51,7 +45,7 @@ class HttpClient {
       const error = e as AxiosError;
 
       if (error.response) {
-        const { data: response, status } = error.response;
+        const { data: response } = error.response;
 
         return Promise.reject(response);
       }
