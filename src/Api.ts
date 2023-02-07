@@ -39,7 +39,7 @@ class ProductsApi extends BaseApi {
   async getProducts (limit: number) {
     return this.httpClient.get<any>(
       '/products',
-        {limit: limit}
+      { limit: limit },
     );
   }
 }

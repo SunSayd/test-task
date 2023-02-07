@@ -1,29 +1,30 @@
 <template>
   <div ref="slider" class="swiper slider">
     <div class="swiper-wrapper">
-        <div v-for="(slide, index) in slides"
-             :key="index"
-             class="swiper-slide"
-        >
-          <img
-              :src="slide"
-              :alt="`Собака номер ${index}`"
-              loading="lazy"
-              class="slider__image"
-          >
-          <div class="swiper-lazy-preloader"/>
-        </div>
+      <div
+        v-for="(slide, index) in slides"
+        :key="index"
+        class="swiper-slide"
+      >
+        <img
+          :src="slide"
+          :alt="`Собака номер ${index}`"
+          loading="lazy"
+          class="slider__image"
+        />
+        <div class="swiper-lazy-preloader" />
+      </div>
     </div>
 
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev" />
+    <div class="swiper-button-next" />
 
-    <div class="swiper-pagination"></div>
+    <div class="swiper-pagination" />
   </div>
 </template>
 
 <script lang="ts">
-import Swiper, {Navigation, Pagination} from 'swiper'
+import Swiper, { Navigation, Pagination } from 'swiper';
 
 export default {
   name: 'Slider',
@@ -32,7 +33,7 @@ export default {
   },
   mounted() {
     new Swiper(this.$refs.slider, {
-      modules: [Navigation, Pagination],
+      modules: [ Navigation, Pagination ],
       loop: true,
       pagination: {
         el: '.swiper-pagination',
@@ -41,7 +42,7 @@ export default {
       lazy: true,
       effect: 'fade',
       fadeEffect: {
-        crossFade: true
+        crossFade: true,
       },
       navigation: {
         nextEl: '.swiper-button-next',
@@ -56,9 +57,9 @@ export default {
           spaceBetween: 30,
         },
       },
-    })
-  }
-}
+    });
+  },
+};
 </script>
 
 <style lang="scss">

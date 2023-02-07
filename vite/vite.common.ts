@@ -1,5 +1,5 @@
 import vue from '@vitejs/plugin-vue2';
-import { createSvgPlugin } from "vite-plugin-vue2-svg";
+import { createSvgPlugin } from 'vite-plugin-vue2-svg';
 import path from 'path';
 import { defineConfig } from 'vite';
 
@@ -18,7 +18,7 @@ const commonConfig = defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "./src/styles/variables/index";`
+        additionalData: '@import "./src/styles/variables/index";',
       },
     },
   },

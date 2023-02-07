@@ -1,12 +1,15 @@
 @use "sass:math";
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
 }
+
 // сетка а-ля bootstrap 4, построеная на флексах
 $columns: 12;
 $gutter: 3rem;
@@ -37,8 +40,8 @@ $gutter-column: 1.5rem;
   @media (min-width: map_get($breakpoints, $size)) {
     @for $i from 1 through $columns {
       .column-#{$size}-#{$i} {
-        flex: 0 0 math.percentage(math.div($i , $columns));
-        max-width: math.percentage(math.div($i , $columns));
+        flex: 0 0 math.percentage(math.div($i, $columns));
+        max-width: math.percentage(math.div($i, $columns));
       }
     }
   }

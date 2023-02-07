@@ -1,7 +1,7 @@
 <template>
   <figure class="product">
     <figcaption>
-      <p></p>
+      <p />
     </figcaption>
   </figure>
 </template>

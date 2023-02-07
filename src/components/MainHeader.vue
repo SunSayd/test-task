@@ -2,11 +2,11 @@
   <header class="main-header">
     <div class="container">
       <div class="main-header__line">
-        <Logo class="main-header__logo"/>
+        <Logo class="main-header__logo" />
         <MainButton
-            class="button"
-            @click="$emit('update:products')"
-            type="button"
+          class="button"
+          type="button"
+          @click="$emit('update:products')"
         >
           Update Products
         </MainButton>
@@ -16,14 +16,14 @@
 </template>
 
 <script lang="ts">
-import Logo from "@/assets/svg/logo.svg";
-import MainButton from "@/components/MainButton.vue";
+import Logo from '@/assets/svg/logo.svg';
+import MainButton from '@/components/MainButton.vue';
 
 export default {
   name: 'MainHeader',
   components: {
     Logo,
-    MainButton
+    MainButton,
   },
 };
 </script>
