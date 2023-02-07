@@ -1,17 +1,17 @@
 <template>
   <figure class="product">
     <div
-         :class="['product__image-box', {
+      :class="['product__image-box', {
         'product__image-box--top': isTop,
         'product__image-box--sale': isSale,
         'product__image-box--popular': isPopular,
       }]"
     >
       <img
-          class="product__image"
-          :src="image"
-          loading="lazy"
-          :alt="description"
+        class="product__image"
+        :src="image"
+        loading="lazy"
+        :alt="description"
       />
     </div>
 

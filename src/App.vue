@@ -161,6 +161,7 @@ export default {
     loadProducts: async function(skipProductsCount?: number) {
       this.$data.isProductsLoading = true;
       const productsInfo = await productsApi.getProducts(100, skipProductsCount);
+
       /* описание довольно часто бывает слишком короткое,
        для демонстрации обрезки текста меняю описание первого элемента
        */
