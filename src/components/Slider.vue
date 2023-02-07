@@ -63,9 +63,11 @@ export default {
 </script>
 
 <style lang="scss">
+
 .slider__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
+
 </style>

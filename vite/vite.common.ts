@@ -18,7 +18,7 @@ const commonConfig = defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: '@import "./src/styles/variables/index";',
+        additionalData: '@import "./src/styles/variables";',
       },
     },
   },

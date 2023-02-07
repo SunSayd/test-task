@@ -1,21 +1,46 @@
+@use "sass:meta";
+@use "sass:math";
 @import "node_modules/swiper/swiper";
 @import "node_modules/swiper/modules/pagination/pagination";
 @import "node_modules/swiper/modules/navigation/navigation";
 
 :root {
-  --swiper-pagination-color: $primary;
-  --swiper-pagination-bullet-inactive-color: $main-gray;
-  --swiper-navigation-color: #fff;
+  --swiper-pagination-color: #{meta.inspect($primary)};
+  --swiper-pagination-bullet-inactive-color: #{meta.inspect($main-gray)};
+  --swiper-pagination-bullet-inactive-opacity: 1;
+  --swiper-navigation-color: #FFFFFF;
+  --swiper-pagination-bottom: 0;
 }
 
-// swiper navigation
-@media (min-width: map-get($breakpoints, "xxs")) {
-  :root {
-    --swiper-navigation-size:
-      2.4rem
-  ;
+// swiper pagination
+:root {
+  --swiper-pagination-bullet-size: 8px;
+
+  @media (min-width: map-get($breakpoints, "md")) {
+    --swiper-pagination-bullet-size: 12px;
+  }
+}
+// убираем дефолтный vertical-align и прижимаем к низу контейнера буллеты для удоства позиционирования
+.swiper-pagination-bullet {
+  vertical-align: bottom;
+}
+/*
+ паддинг общего контейнера слайдеров для корректного отступа буллетов
+ складывается из размера буллета и размера отступа
+ */
+.swiper {
+  padding-bottom: calc(var(--swiper-pagination-bullet-size) + 4px );
+
+  @media (min-width: map-get($breakpoints, "xs")) {
+    padding-bottom: calc(var(--swiper-pagination-bullet-size) + 8px );
   }
 
+  @media (min-width: map-get($breakpoints, "xxxxl")) {
+    padding-bottom: calc(var(--swiper-pagination-bullet-size) + 16px );
+  }
+}
+// swiper navigation
+@media (min-width: map-get($breakpoints, "xxs")) {
   .swiper-button-next::after,
   .swiper-button-prev::after {
     font-size: 1.5rem;
@@ -75,4 +100,37 @@
   border-radius: 50%;
   width: var(--swiper-navigation-size);
   height: var(--swiper-navigation-size);
+}
+
+// высота слайдов
+.swiper-slide {
+  height: 14.3rem;
+
+  @media (min-width: map_get($breakpoints, 'sm')) {
+    height: 13rem;
+  }
+
+  @media (min-width: map_get($breakpoints, 'md')) {
+    height: 20.8rem;
+  }
+
+  @media (min-width: map_get($breakpoints, 'lg')) {
+    height: 16.7rem;
+  }
+
+  @media (min-width: map_get($breakpoints, 'xl')) {
+    height: 18.7rem;
+  }
+
+  @media (min-width: map_get($breakpoints, 'xxl')) {
+    height: 25rem;
+  }
+
+  @media (min-width: map_get($breakpoints, 'xxxl')) {
+    height: 27.2rem;
+  }
+
+  @media (min-width: map_get($breakpoints, 'xxxxl')) {
+    height: 29.4rem;
+  }
 }

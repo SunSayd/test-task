@@ -36,10 +36,13 @@ class DogsApi extends BaseApi {
 }
 
 class ProductsApi extends BaseApi {
-  async getProducts (limit: number) {
+  async getProducts (limit: number, skip?: number) {
     return this.httpClient.get<any>(
       '/products',
-      { limit: limit },
+      {
+        limit: limit,
+        skip: skip,
+      },
     );
   }
 }

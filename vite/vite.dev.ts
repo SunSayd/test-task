@@ -5,7 +5,7 @@ import commonConfig from './vite.common';
 const config = defineConfig({
   server: {
     host: true,
-    port: 3000,
+    port: 3010,
     open: true,
   },
 });

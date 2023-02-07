@@ -1,12 +1,13 @@
 <template>
   <div>
     <MainHeader
-      @update:products="loadProducts"
+        :isProductsLoading="isProductsLoading"
+        @update:products="loadNewProducts"
     />
     <div class="container">
       <div class="row">
         <div
-          class="column-xxs-12"
+          class="column-xxs-12 slider-container"
         >
           <Slider
             :slides="dogImages"
@@ -18,12 +19,13 @@
           class="column-xxs-12 column-md-6 column-lg-4 column-xxl-3"
         >
           <Product
+            :image="product.thumbnail"
             :brand="product.brand"
-            :descripion="product.description"
+            :category="product.category"
+            :description="product.description"
             :thumbnail="product.thumbnail"
             :stock="product.stock"
           />
-          {{ product.stock }}
         </div>
       </div>
     </div>
@@ -54,6 +56,10 @@ export default {
       },
       productTickCount: 1,
       isProductsLoading: true,
+      /* dummyJson отдает один и тот же фиксированный список товаров
+        поэтому для удобства тестирования добавлен параметр skip
+       */
+      skipProductsCount: 0,
     };
   },
   created() {
@@ -96,14 +102,6 @@ export default {
       if (reduceProductStock) {
         clearInterval(reduceProductStock);
       }
-      // формируем обьект который хранит в себе информацию о том какие товары должны быть обновлены в определенную секунду
-      for (let i=0; i < this.$data.productsInfo.total; i++) {
-        // получаем случайное число от 1 до 4 которое служит ключом
-        let count = Math.floor(Math.random() * 4) + 1;
-
-        // добавляем по этому ключу в массив обьекта текущий индекс
-        this.$data.productsStockCounts[count.toString()].push(i.toString());
-      }
       //  функция уменьшения количества остатков товаров
       reduceProductStock = setInterval(() => {
         let candidatesToUpdate = [];
@@ -123,10 +121,9 @@ export default {
             if (productStock === 0) {
               indexesToDelete.push(index);
             } else {
-              this.$data.productsInfo.products[this.$data.productsStockCounts[candidate][index]].stock = productStock - 1;
+              this.$data.productsInfo.products[this.$data.productsStockCounts[candidate][index]].stock--;
             }
           }
-
           if (indexesToDelete.length) {
             indexesToDelete.reverse();
             for (const indexToDelete of indexesToDelete) {
@@ -143,24 +140,42 @@ export default {
         this.$data.productTickCount++;
       }, 1000);
     },
-    loadProducts: async function() {
-      this.$data.isProductsLoading = true;
-      this.$data.productsInfo = await productsApi.getProducts(100);
-      for (let index = 0; index < this.$data.productsInfo.total; index++) {
+    // формируем обьект который хранит в себе информацию о том какие товары должны быть обновлены в определенную секунду
+    randomizeProductsStockCounts: function () {
+      this.$data.productsStockCounts = {
+        '1': [],
+        '2': [],
+        '3': [],
+        '4': [],
+      };
+      for (let index = 0; index < Number(this.$data.productsInfo.products.length); index++) {
         // получаем случайное число от 1 до 4 которое служит ключом
         let count = Math.floor(Math.random() * 4) + 1;
 
         // добавляем по этому ключу в массив обьекта текущий индекс
-        this.$data.productsStockCounts[count.toString()].push(index);
+        this.$data.productsStockCounts[count].push(index);
       }
-      localStorage.setItem('products', JSON.stringify(this.$data.products));
+    },
+    loadProducts: async function(skipProductsCount?: number) {
+      this.$data.isProductsLoading = true;
+      this.$data.productsInfo = await productsApi.getProducts(100, skipProductsCount);
+      /* описание довольно часто бывает слишком короткое,
+       для демонстрации обрезки текста меняю описание первого элемента
+       */
+      this.$data.productsInfo.products[0].description = 'Возьмите меня на работу hire me pls' +
+          'Возьмите меня на работу hire me pls Возьмите меня на работу hire me pls';
+      this.randomizeProductsStockCounts()
+      localStorage.setItem('productsInfo', JSON.stringify(this.$data.productsInfo));
+
       this.$data.isProductsLoading = false;
     },
     initProducts: async function () {
-      const storedProducts = localStorage.getItem('products');
+      const storedProducts = localStorage.getItem('productsInfo');
 
       if (storedProducts) {
         this.$data.productsInfo = JSON.parse(storedProducts);
+        this.randomizeProductsStockCounts()
+        this.$data.isProductsLoading = false;
         this.setProductsCountTimer();
 
         return;
@@ -168,6 +183,53 @@ export default {
       await this.loadProducts();
       this.setProductsCountTimer();
     },
+    loadNewProducts: async function () {
+      this.$data.skipProductsCount = this.$data.skipProductsCount >= 80 ? 0 : this.$data.skipProductsCount + 10;
+      await this.loadProducts(this.$data.skipProductsCount);
+    }
   },
 };
 </script>
+
+<style lang="scss">
+.slider-container {
+  margin-bottom: 0.8rem;
+  min-height: 19.7rem;
+}
+
+@media (min-width: map_get($breakpoints, 'xs')) {
+  .slider-container {
+    margin-bottom: 3.2rem;
+  }
+}
+
+@media (min-width: map_get($breakpoints, 'sm')) {
+  .slider-container {
+    margin-bottom: 1.6rem;
+  }
+}
+
+@media (min-width: map_get($breakpoints, 'lg')) {
+  .slider-container {
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (min-width: map_get($breakpoints, 'xl')) {
+  .slider-container {
+    margin-bottom: 1.6rem;
+  }
+}
+
+@media (min-width: map_get($breakpoints, 'xxl')) {
+  .slider-container {
+    margin-bottom: 2.4rem;
+  }
+}
+
+@media (min-width: map_get($breakpoints, 'xxxxl')) {
+  .slider-container {
+    margin-bottom: 2.6rem;
+  }
+}
+</style>

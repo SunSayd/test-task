@@ -11,3 +11,29 @@ body {
   font-family: $primary-font;
   font-weight: $font-weight-normal;
 }
+
+p {
+  display: block;
+  margin-block-start: 0;
+  margin-block-end: 0.8rem;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  font-family: $primary-font;
+  font-weight: $font-weight-normal;
+  font-size: 1.6rem;
+  line-height: 1.8rem;
+
+  @media (min-width: map-get($breakpoints, "lg")) {
+    font-size: 1.4rem;
+    line-height: 1.7rem;
+  }
+
+  @media (min-width: map-get($breakpoints, "xxxxl")) {
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+  }
+}
+
+.bold {
+  font-weight: $font-weight-bold;
+}
