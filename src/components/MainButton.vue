@@ -1,8 +1,8 @@
 <template>
   <button
-      @click="$emit('click')"
-      :disabled="disabled"
-      class="button"
+    :disabled="disabled"
+    class="button"
+    @click="$emit('click')"
   >
     <slot />
   </button>
@@ -13,7 +13,7 @@ export default {
   name: 'MainButton',
   props: {
     disabled: Boolean,
-  }
+  },
 };
 </script>
 

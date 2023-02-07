@@ -12,3 +12,8 @@ npm run dev
 ```bash
 npm run build
 ```
+
+## Режим превью
+```bash
+npm run preview
+```

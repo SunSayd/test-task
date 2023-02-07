@@ -1,11 +1,20 @@
 <template>
   <figure class="product">
-    <img
-        class="product__image"
-         :src="image"
-         loading="lazy"
-         :alt="description"
+    <div
+         :class="['product__image-box', {
+        'product__image-box--top': isTop,
+        'product__image-box--sale': isSale,
+        'product__image-box--popular': isPopular,
+      }]"
     >
+      <img
+          class="product__image"
+          :src="image"
+          loading="lazy"
+          :alt="description"
+      />
+    </div>
+
     <figcaption>
       <p>
         <span class="bold">Brand: </span>
@@ -36,12 +45,16 @@ export default {
     category: String,
     description: String,
     stock: Number,
-  }
+    isTop: Boolean,
+    isSale: Boolean,
+    isPopular: Boolean,
+  },
 };
 </script>
 
 <style lang="scss">
 .product {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -51,11 +64,49 @@ export default {
   padding: 0.5rem 0.5rem 0.2rem;
   margin-bottom: 0.8rem;
 
-  &__image {
-    object-fit: cover;
+  &__image-box {
+    position: relative;
     width: 100%;
     height: 17.7rem;
     margin-bottom: 0.2rem;
+    /* забыл уточнить может ли быть несколько бейджей
+      поэтому решил показывать один по следующему приоритету
+    */
+    &::after {
+      content: attr(data-after);
+      position: absolute;
+      display: inline-block;
+      padding: 0.4rem 1.6rem;
+      color: #FFFFFF;
+      font-weight: $font-weight-bold;
+      font-size: 1.2rem;
+      border-radius: 100px;
+    }
+    &--top::after {
+      content: 'TOP';
+      background: $main-green;
+      top: 8px;
+      left: 8px;
+    }
+    &--sale::after {
+      content: 'SALE';
+      background: $main-brown;
+      top: 8px;
+      left: 50%;
+      transform: translate(-50%);
+    }
+    &--popular::after {
+      content: 'POPULAR';
+      background: $main-violet;
+      bottom: 8px;
+      right: 8px;
+    }
+  }
+
+  &__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
   }
 
   &__description {
@@ -74,7 +125,7 @@ export default {
   .product {
     padding: 0.6rem 0.8rem 0.5rem;
 
-    &__image {
+    &__image-box {
       height: 20.8rem;
       margin-bottom: 0.4rem;
     }
@@ -85,7 +136,7 @@ export default {
   .product {
     padding: 0.9rem 0.9rem 1.2rem;
 
-    &__image {
+    &__image-box {
       height: 26.4rem;
       margin-bottom: 0.8rem;
     }
@@ -97,7 +148,7 @@ export default {
     padding: 0.6rem 0.6rem 3rem;
     margin-bottom: 1.6rem;
 
-    &__image {
+    &__image-box {
       height: 20.1rem;
     }
   }
@@ -107,7 +158,7 @@ export default {
   .product {
     padding: 0.6rem 0.6rem 2.4rem;
 
-    &__image {
+    &__image-box {
       height: 16.1rem;
     }
   }
@@ -115,7 +166,7 @@ export default {
 
 @media (min-width: map_get($breakpoints, 'xl')) {
   .product {
-    &__image {
+    &__image-box {
       height: 18rem;
     }
   }
@@ -125,7 +176,7 @@ export default {
   .product {
     padding: 0.6rem 0.6rem 1.9rem;
 
-    &__image {
+    &__image-box {
       height: 17.6rem;
     }
   }
@@ -136,7 +187,7 @@ export default {
     padding: 0.7rem 0.7rem 3.3rem;
     margin-bottom: 2.4rem;
 
-    &__image {
+    &__image-box {
       height: 19.1rem;
     }
   }
@@ -146,7 +197,7 @@ export default {
   .product {
     padding: 0.8rem 0.8rem 3.4rem;
 
-    &__image {
+    &__image-box {
       height: 20.6rem;
       margin-bottom: 0.9rem;
     }

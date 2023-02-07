@@ -1,8 +1,8 @@
 <template>
   <div>
     <MainHeader
-        :isProductsLoading="isProductsLoading"
-        @update:products="loadNewProducts"
+      :isProductsLoading="isProductsLoading"
+      @update:products="loadNewProducts"
     />
     <div class="container">
       <div class="row">
@@ -25,6 +25,9 @@
             :description="product.description"
             :thumbnail="product.thumbnail"
             :stock="product.stock"
+            :isTop="product.isTop"
+            :isSale="product.isSale"
+            :isPopular="product.isPopular"
           />
         </div>
       </div>
@@ -92,8 +95,6 @@ export default {
       Promise.all(promises)
         .then(async() => {
           ArrayOfUrlsToCookie(this.$data.dogImages);
-        })
-        .catch(error => {
         });
     },
     setProductsCountTimer: function() {
@@ -105,6 +106,7 @@ export default {
       //  функция уменьшения количества остатков товаров
       reduceProductStock = setInterval(() => {
         let candidatesToUpdate = [];
+
         // считаем какие из групп товаров в productsStockCounts должны быть посчитаны в данную конкретную секунду и складываем в массив
         for (const key of Object.keys(this.$data.productsStockCounts)) {
           if (this.$data.productTickCount % key === 0) {
@@ -158,13 +160,18 @@ export default {
     },
     loadProducts: async function(skipProductsCount?: number) {
       this.$data.isProductsLoading = true;
-      this.$data.productsInfo = await productsApi.getProducts(100, skipProductsCount);
+      const productsInfo = await productsApi.getProducts(100, skipProductsCount);
       /* описание довольно часто бывает слишком короткое,
        для демонстрации обрезки текста меняю описание первого элемента
        */
-      this.$data.productsInfo.products[0].description = 'Возьмите меня на работу hire me pls' +
+      productsInfo.products[0].description = 'Возьмите меня на работу hire me pls' +
           'Возьмите меня на работу hire me pls Возьмите меня на работу hire me pls';
-      this.randomizeProductsStockCounts()
+      // добавляем данные о бейджиках
+      productsInfo.products[0].isTop = true;
+      productsInfo.products[1].isSale = true;
+      productsInfo.products[3].isPopular = true;
+      this.$data.productsInfo = productsInfo;
+      this.randomizeProductsStockCounts();
       localStorage.setItem('productsInfo', JSON.stringify(this.$data.productsInfo));
 
       this.$data.isProductsLoading = false;
@@ -174,7 +181,7 @@ export default {
 
       if (storedProducts) {
         this.$data.productsInfo = JSON.parse(storedProducts);
-        this.randomizeProductsStockCounts()
+        this.randomizeProductsStockCounts();
         this.$data.isProductsLoading = false;
         this.setProductsCountTimer();
 
@@ -186,7 +193,7 @@ export default {
     loadNewProducts: async function () {
       this.$data.skipProductsCount = this.$data.skipProductsCount >= 80 ? 0 : this.$data.skipProductsCount + 10;
       await this.loadProducts(this.$data.skipProductsCount);
-    }
+    },
   },
 };
 </script>

@@ -4,9 +4,9 @@
       <div class="main-header__line">
         <Logo class="main-header__logo" />
         <MainButton
-            :disabled="isProductsLoading"
-            type="button"
-            @click="$emit('update:products')"
+          :disabled="isProductsLoading"
+          type="button"
+          @click="$emit('update:products')"
         >
           Update Products
         </MainButton>
@@ -27,7 +27,7 @@ export default {
   },
   props: {
     isProductsLoading: Boolean,
-  }
+  },
 };
 </script>
 
